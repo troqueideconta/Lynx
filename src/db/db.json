@@ -1,0 +1,32 @@
+{
+  "ticketManagers": [],
+  "857856528659513356": {
+    "entrada": {
+      "type": "text",
+      "deleted": false,
+      "id": "896137410763710496",
+      "name": "testes-lynx",
+      "rawPosition": 2,
+      "parentID": "857856528659513357",
+      "permissionOverwrites": [],
+      "topic": null,
+      "lastMessageID": "896196906194198608",
+      "rateLimitPerUser": 0,
+      "lastPinTimestamp": null,
+      "guild": "857856528659513356",
+      "messages": [
+        "896196760786055198",
+        "896196761713000458",
+        "896196785704402966",
+        "896196843120250920",
+        "896196885658877952",
+        "896196886573236244",
+        "896196905078489088",
+        "896196906194198608"
+      ],
+      "nsfw": false,
+      "listIndex": 7,
+      "createdTimestamp": 1633726208154
+    }
+  }
+}
