@@ -7,7 +7,7 @@ module.exports = (client) => {
         const JoinChannel = await client.channels.fetch(dbJoin.id)
         const embed = new MessageEmbed()
         .setTimestamp(new Date())
-        .setColor('#16fea9')
+        .setColor(client.config.embedMainColor)
         .setFooter(member.user.tag ,member.user.avatarURL())
         .setTitle(`${member.user.tag} entrou no servidor!`)
 
