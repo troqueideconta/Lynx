@@ -1,25 +1,27 @@
 const { MessageEmbed } = require("discord.js");
 const Command = require("../../classes/Command");
-const { disbut, MessageButton } = require('discord-buttons');
+const { MessageButton } = require('discord-buttons');
 const moment = require('moment');
 moment.locale('pt-BR')
 
 const command = new Command('ban', 'Staff')
     command.setAliases('banir')
     .setExecute(async (execParams) => {
-        const { message, client } = execParams;//okok
+        const { message, client, db } = execParams;
+        if(message.author.bot) return;
 
-       
+        let member = message.mentions.members.first();
+
         const dbPuni = client.db.get(member.guild.id).get('punicoes_channel').value();
-        if(!dbPuni) return;
+            if(!dbPuni) return;
+       
 
         const channel = await client.channels.fetch(dbPuni.id)
        
          if (!message.member.hasPermission('BAN_MEMBERS')) 
            return message.channel.send(`${message.author}, você não possui permissão para este comando.\nPermissão necessária: ` + "`BAN_MEMBERS`").then(m => m.delete({ timeout: 4000 }));
-       
-           let member = message.mentions.members.first();
-       
+      
+
            if (!member)
              return message.channel.send(`${message.author}, você precisa mencionar um membro!`).then(m => m.delete({ timeout: 4000 }));
        
@@ -102,6 +104,8 @@ const command = new Command('ban', 'Staff')
             `)
   
             .setTimestamp(new Date()) 
+
+            
   
            channel.send(banembed)
             
