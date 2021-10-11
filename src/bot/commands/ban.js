@@ -7,16 +7,10 @@ moment.locale('pt-BR')
 const command = new Command('ban', 'Staff')
     command.setAliases('banir')
     .setExecute(async (execParams) => {
-        const { message, client, db } = execParams;
+        const { message, client } = execParams;
         if(message.author.bot) return;
 
         let member = message.mentions.members.first();
-
-        const dbPuni = client.db.get(member.guild.id).get('punicoes_channel').value();
-            if(!dbPuni) return;
-       
-
-        const channel = await client.channels.fetch(dbPuni.id)
        
          if (!message.member.hasPermission('BAN_MEMBERS')) 
            return message.channel.send(`${message.author}, você não possui permissão para este comando.\nPermissão necessária: ` + "`BAN_MEMBERS`").then(m => m.delete({ timeout: 4000 }));
@@ -91,24 +85,6 @@ const command = new Command('ban', 'Staff')
                   }
                 ]
             });
-
-          
-             
-            const banembed = new MessageEmbed()
-            .setTitle(`Banido | ${message.guild.name}**`) 
-            .setColor(client.config.embedMainColor)
-            .setDescription(`
-            **Staff:** ${message.author}
-            **Infrator:** ${member.user.tag}
-            **Motivo:** ${reason}
-            `)
-  
-            .setTimestamp(new Date()) 
-
-            
-  
-           channel.send(banembed)
-            
 
     })
           

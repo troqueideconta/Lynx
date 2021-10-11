@@ -12,8 +12,8 @@ const manager = client.giveawaysManager = new GiveawaysManager(client, {
     default: {
         botsCanWin: false,
         exemptPermissions: ['ADMINISTRATOR'],
-        embedColor: '#BA55D3',
-        embedColorEnd: '#BA55D3',
+        embedColor: '#FF8C00',
+        embedColorEnd: '#FF8C00',
         reaction: '🎉'
     }
 });
@@ -23,7 +23,7 @@ const FileSync = require('lowdb/adapters/FileSync')
  
 const adapter = new FileSync('./src/db/db.json')
 const db = low(adapter)
-db.defaults({ticketManagers: []}).write();
+db.defaults({guilds: []}).write();
 
 client.db = db;
 const config = client.config = require('./src/config/bot.json');
