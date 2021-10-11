@@ -2,7 +2,7 @@ const { MessageEmbed } = require("discord.js");
 
 function generateSucessEmbed(sucessMessage) {
     const embed = new MessageEmbed()
-    .setColor('#BA55D3')
+    .setColor(client.config.embedMainColor)
     .setTitle('Comando executado')
     .setDescription(`${sucessMessage}`)
 

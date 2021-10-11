@@ -30,7 +30,7 @@ const command = new Command('sugestão', 'Utilidades')
             dmChannel = await message.author.createDM(); 
             await dmChannel.send({embed: startEmbed})
         }
-        catch (e) { return message.channel.send(generateErrorEmbed('- DM bloqueada')) }
+        catch (e) { return message.channel.send(generateErrorEmbed('- Mensagem direta bloqueada')) }
         message.channel.send('**Eu lhe enviei uma DM para pegar sua sugestão, poderia olhar? :3**')
         const interaction = {
             dm: true,
@@ -42,7 +42,7 @@ const command = new Command('sugestão', 'Utilidades')
 
 
         const embed = new MessageEmbed()
-            .setColor('#7FFFD4')
+            .setColor(client.config.embedMainColor)
             .setAuthor(message.author.tag, message.author.avatarURL())
             .addField('Nos diga, qual sua sugestão?', configs.sugestion)
             .addField('Nos diga, por qual motivo devemos adiciona-la?', configs.pqadd)

@@ -9,7 +9,7 @@ module.exports = (client) => {
         const channel = await client.channels.fetch(dbLog.id)
         const embed = new MessageEmbed()
         .setTitle('Mensagem editada')
-        .setColor('#7FFFD4')
+        .setColor(client.config.embedMainColor)
         .setFooter(message.author.tag, message.author.avatarURL())
         .setDescription(`
         **Mensagem de <@${message.author.id}>

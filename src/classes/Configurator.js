@@ -1,7 +1,6 @@
 const { MessageMenu, MessageMenuOption } = require("discord-buttons");
 const { MessageEmbed, Message } = require("discord.js");
 
-//No maximo 25 opções por menu
 
 async function configurator(interaction, options) {
     const { channel, author } = interaction;

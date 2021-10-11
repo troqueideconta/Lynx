@@ -1,6 +1,6 @@
 {
     "title": "Sua sugestão foi enviada com sucesso, obrigado por sua sugestão!",
-    "color": "#7FFFD4",
+    "color": "client.config.embedMainColor",
     "description": "",
     "timestamp": "",
     "author": {

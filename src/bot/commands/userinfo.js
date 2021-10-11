@@ -10,6 +10,8 @@ const command = new Command('userinfo', 'Informações')
     .setExecute(async execParams => {
         const { message, client } = execParams;
 
+		const args = message.content.trim().split(/ +/g);
+
 		const status = {
 			online: "Online",
 			idle: "Ocioso",
@@ -27,16 +29,16 @@ const command = new Command('userinfo', 'Informações')
 		  let inline = true
 			let resence = true
 		
-		const embed = new Discord.MessageEmbed()
+		const embed = new MessageEmbed()
 		   .setThumbnail(member.user.avatarURL({dynamic : true, size: 4096 }))
-		   .setColor("#7FFFD4")
+		   .setColor(client.config.embedMainColor)
 		   .setAuthor(`Informações Sobre: ${member.user.tag}.`)
 		   .setDescription(`
 		    
 		🚧 | Status: \`${status[member.user.presence.status]}\`
 		👾 | Conta criada em: \`${formatDate('DD/MM/YYYY, às HH:mm:ss', dateE)}\`
 		
-		📰 | Entrou no ${message.guild.name} em: \`${formatDate('DD/MM/YYYY, às HH:mm:ss', joined)}\`
+		📰 | Entrou no **\`${message.guild.name}\`** em: \`${formatDate('DD/MM/YYYY, às HH:mm:ss', joined)}\`
 		📂 | ID: \`${message.author.id}\`
 		
 		`)

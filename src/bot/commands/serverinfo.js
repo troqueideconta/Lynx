@@ -22,23 +22,22 @@ const command = new Command('serverinfo', 'Informações')
     
       var cargos = message.guild.roles.cache.size;
     
-      var total = message.guild.members.cache.size;
-    
+      var owner = message.guild.owner;
     
       const info = new MessageEmbed()
-      .setColor("#7FFFD4")
+      .setColor(client.config.embedMainColor)
       .setDescription(`
     
-      👑 | **Fundador:** ${message.guild.owner}
+      👑 | **Fundador:** ${owner}
       🌎 | **Local:** \`${local[message.guild.region]}\`
-      📂 | ID: \`${message.guild.id}\`
+      🚀 | **Boosters:** \`${message.guild.premiumSubscriptionCount || '0'}\`
+      📂 | **ID:** \`${message.guild.id}\`
     
-      👥 | **Membros:** \`${total}\`
-      🤖 | **Bots:** \`${robôs}\``)
+      👥 | **Membros:** \`${membros}\`
+      🤖 | **Bots:** \`${robôs}\`
       
-      .setFooter(`Courtesy's Store ©️`)
-      .setTimestamp(new Date())
-    
+      💻 | **Cargos:** \`${cargos}\``)
+      
       message.channel.send(info);
     
     
@@ -50,5 +49,4 @@ const command = new Command('serverinfo', 'Informações')
       }, template)
     }
     })
-command.info = 'Envia em sua DM todos os produtos da loja.';
 module.exports = command;

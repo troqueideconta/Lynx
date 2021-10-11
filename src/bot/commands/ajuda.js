@@ -2,8 +2,7 @@ const { MessageEmbed } = require('discord.js');
 const Command = require('../../classes/Command');
 
 const command = new Command('ajuda', 'Utilidades');
-command.info = 'Mostra todos comandos disponiveis';
-command.setAliases(['a', 'help', 'comandos'])
+command.setAliases(['help', 'comandos'])
     .setExecute((execParams) => {
         const { message, prefix, client } = execParams;
 
@@ -13,7 +12,7 @@ command.setAliases(['a', 'help', 'comandos'])
         };
 
         const embed = new MessageEmbed()
-            .setTitle('Menu de comandos | Courtesy´s Store BOT')
+            .setTitle('Menu de comandos | Lynx')
             .setColor(client.config.embedMainColor)
 
         comandos.forEach((value, index) => {

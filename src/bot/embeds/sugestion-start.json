@@ -1,6 +1,6 @@
 {
-    "title": "Courtesy´s Store | Sugestão",
-    "color": "#7FFFD4",
+    "title": "Sugestão",
+    "color": "client.config.embedMainColor",
     "description": "",
     "timestamp": "",
     "author": {

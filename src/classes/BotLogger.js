@@ -4,7 +4,7 @@ class BotLogger {
     constructor(){};
 
     static COLORS = class COLORS {
-        static PURPLE = '#BA55D3';
+        static PURPLE = '#purple';
         static BLACK = 'black';
         static RED = 'red';
         static GREEN = 'green';

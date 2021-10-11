@@ -98,8 +98,8 @@ class CommandHandler {
                 if (!command) throw `Comando "${execParams.command}" não encontrado`;
             }
 
-            if (command.checkAndGo) command?.checkAndGo(execParams); // Verificação pra ter compatibilidade com comandos antigos   \\
-            else command.execute(execParams);                      // Deve ser removida após os comandos antigos serem refatorados \\
+            if (command.checkAndGo) command?.checkAndGo(execParams); 
+            else command.execute(execParams);                      
             logger.logMessage(`${execParams.message.author.username} usou o comando: &/` + execParams.prefix + execParams.command, 'cyan', 'bold');
         }
         catch (e) {
