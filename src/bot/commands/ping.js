@@ -7,11 +7,11 @@ command.setAliases('ms')
   const {message, client, args} = execParams;
   const Embed = new MessageEmbed() 
   .setDescription("*__Pinging...__*")
-  .setColor('#d0db84')
+  .setColor(client.config.embedMainColor)
 
 const newEmbed = new MessageEmbed() 
   .setDescription(`🏓${Math.round(client.ws.ping)}ms`)
-  .setColor('#f7f6a1')
+  .setColor(client.config.embedMainColor)
 
 // Edit Part Below
 message.channel.send(Embed)
