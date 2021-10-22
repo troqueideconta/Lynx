@@ -9,33 +9,39 @@ const command = new Command('mute', 'Staff')
 command.setAliases('mutar')
 .setExecute(async execParams => {
     const {message, client, args} = execParams;
-    if (!message.member.permissions.has("MANAGE_MESSAGES"))
-    return message.channel.send(
-      "você não tem permissão para usar esse comando!"
-    );
-    let member = message.mentions.members.first();
-    let usert = message.author
+    if(message.author.bot) return;
+
+let muterole = message.guild.roles.cache.find(role => role.name === "mutado");
+let member = message.mentions.members.first();
+let usert = message.author
+let mutetime = args[1];
 let tomute = message.guild.member(message.mentions.users.first() || message.guild.members.cache.get(args[0]));
+
+if(!mutetime) return message.channel.send({embed: embeda, component: fim});
+if (!message.member.permissions.has("MANAGE_MESSAGES"))return message.channel.send("você não tem permissão para usar esse comando!");
 if(!tomute) return message.channel.send("Por favor, mencione um usuário desse servidor!");
+if(!member.id === message.author.id) return message.channel.send('🚫 |Você não puder mutar você mesmo!');
+if (member.roles.cache.has(muterole.id))return message.channel.send(`O usuário mencionado já esta mutado!`)
 
 const embeda = new MessageEmbed()
              .setColor(client.config.embedMainColor)
              .setTitle("**Você não especificou um tempo!**")
              .setDescription('`s` *= segundos*\n`m` *= minutos*\n`h` *= horas*\n`d` *= dias*\n*exemplo: l.mute @user 10m*\n`ou você pode usar datas, como: 30/12/2021`\n\n' + `Para mutar o(a) ${tomute} por um tempo indeterminado, reaja abaixo.`)
 
-             const embedi = new MessageEmbed()
+             const desmutado = new MessageEmbed()
              .setColor(client.config.embedMainColor)
-             .setTitle("**Você não especificou um tempo!**")
-             .setDescription('`s` *= segundos*\n`m` *= minutos*\n`h` *= horas*\n`d` *= dias*\n*exemplo: l.mute @user 10m*\n`ou você pode usar datas, como: 30/12/2021`\n\n')
+             .setTitle(`✅ | ${tomute.user.tag} foi mutado por um tempo indefinido`)
+             .setDescription(`Caso queira desmutar o(a) ${tomute} use o comando l.unmute`)
 
              let fim = new MessageButton()
              .setStyle('blurple')
              .setID('final')
-             .setLabel('Mutar por um tempo indeterminado')
+             .setLabel('Mutar por tempo indeterminado')
 
              client.on('clickButton', async (button) => {
               if(button.id === "final"){
                  button.reply.defer()
+                 if(!member.id === message.author.id) return;
                 let muterole = message.guild.roles.cache.find(role => role.name === "mutado");
                 //start of create role
                 if(!muterole){
@@ -58,20 +64,14 @@ const embeda = new MessageEmbed()
                    }
                 }
                 await tomute.roles.add(muterole);
-                await button.message.edit({embed: desmutado, component: unmute})
-                }
-              })
+                await button.message.edit({embed: desmutado, component: null})
+              }
+            })
 
             let unmute = new MessageButton()
             .setStyle('green')
             .setID('desmutar')
             .setLabel('Desmutar')
-
-            
-            const desmutado = new MessageEmbed()
-            .setColor(client.config.embedMainColor)
-            .setTitle(`✅ | ${tomute.user.tag} foi mutado por um tempo indefinido`)
-            .setDescription(`Caso queira desmutar o(a) ${tomute} reaja abaixo ou use o comando l.unmute`)
 
             const desmutada = new MessageEmbed()
             .setColor(client.config.embedMainColor)
@@ -80,15 +80,17 @@ const embeda = new MessageEmbed()
             client.on('clickButton', async (button) => {
               if(button.id === "desmutar"){
                  button.reply.defer()
+                 if(!member.id === message.author.id) return;
                 let muterole = message.guild.roles.cache.find(role => role.name === "mutado");
                 tomute.roles.remove(muterole);
                 await button.message.edit({embed: desmutada, component: null})
               }
             })
 
-             let mutetime = args[1];
-if(!mutetime) return message.channel.send({embed: embeda, component: fim})
-
+            const expirou = new MessageEmbed()
+             .setColor(client.config.embedMainColor)
+             .setTitle("⏱ | O tempo para usar o comando expirou!")
+             .setDescription(`Caso queira usar o comando, digite novamente!`)
 
 const embed = new MessageEmbed()
              .setColor(client.config.embedMainColor)
@@ -110,6 +112,7 @@ const embed = new MessageEmbed()
               client.on('clickButton', async (button) => {
                 if(button.id === "confirm1"){
                   button.reply.defer()
+                  if(!member.id === message.author.id) return;
                   let muterole = message.guild.roles.cache.find(role => role.name === "mutado");
                   //start of create role
                   if(!muterole){
@@ -136,14 +139,10 @@ const embed = new MessageEmbed()
                     tomute.roles.remove(muterole);
                   }, ms(mutetime));
                   
-                  await button.message.edit({embed: confirmado, component: unmute})
+                  await button.message.edit({embed: confirmado, component: null})
                 }
               })
               
-              let no = new MessageButton()
-              .setStyle('blurple')
-              .setID('mudo')
-              .setLabel('Mutar')
 
               const cancelado = new MessageEmbed()
               .setColor(client.config.embedMainColor)
@@ -162,48 +161,16 @@ const embed = new MessageEmbed()
               .setLabel('Cancelar')
 
       
-              client.on('clickButton', async (button) => {
-                if(button.id === "mudo"){
-                 button.reply.defer()
-                  let muterole = message.guild.roles.cache.find(role => role.name === "mutado");
-                  //start of create role
-                  if(!muterole){
-                    try {
-                      let muterole = await message.guild.roles.create({
-                        data: {
-                          name: 'mutado',
-                          permissions: []
-                        }
-                      });
-                      message.guild.channels.cache.forEach(async (channel, id) => {
-                        await channel.createOverwrite(muterole, {
-                          SEND_MESSAGES: false,
-                          ADD_REACTIONS: false
-                  
-                        })
-                      });
-                     } catch (e) {
-                      console.log(e.stack);
-                     }
-                  }
-                    await tomute.roles.add(muterole);
-                  setTimeout(function(){
-                    tomute.roles.remove(muterole);
-                  }, ms(mutetime));
-                  
-                  await button.message.edit({embed: confirmado, component: null})
-                }
-              })
-
+           
 
               client.on('clickButton', async (button) => {
                 if(button.id === "cancel1"){
                   button.reply.defer()
                     let muterole = message.guild.roles.cache.find(role => role.name === "mutado");
                   tomute.roles.remove(muterole);
-                  await button.message.edit({embed: cancelado, component: no})
-                  }
-                })
+                  await button.message.edit({embed: cancelado, component: null})
+                }
+              })
 
 
               message.channel.send({
@@ -214,10 +181,11 @@ const embed = new MessageEmbed()
                     components: [confirm, cancel]
                   }
                 ]
-            });
+            })
 
         
 })
 
 
 module.exports = command;
+
