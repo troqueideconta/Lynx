@@ -17,11 +17,32 @@ let usert = message.author
 let mutetime = args[1];
 let tomute = message.guild.member(message.mentions.users.first() || message.guild.members.cache.get(args[0]));
 
-if(!mutetime) return message.channel.send({embed: embeda, component: fim});
+if (!muterole) {
+  try {
+    let muterole = await message.guild.roles.create({
+      data: {
+        name: 'mutado',
+        permissions: []
+      }
+    });
+    message.guild.channels.cache.forEach(async (channel, id) => {
+      await channel.createOverwrite(muterole, {
+        SEND_MESSAGES: false,
+        ADD_REACTIONS: false,
+        SPEAK: false
+      })
+    });
+  } catch (error) {
+    console.log(error)
+  }
+};
+
+
+
 if (!message.member.permissions.has("MANAGE_MESSAGES"))return message.channel.send("você não tem permissão para usar esse comando!");
 if(!tomute) return message.channel.send("Por favor, mencione um usuário desse servidor!");
-if(!member.id === message.author.id) return message.channel.send('🚫 |Você não puder mutar você mesmo!');
-if (member.roles.cache.has(muterole.id))return message.channel.send(`O usuário mencionado já esta mutado!`)
+if (member === message.member) return message.channel.send('🚫 |Você não puder mutar você mesmo!');
+if (member === message.guild.me) return message.channel.send('Você não pode me mutar!');
 
 const embeda = new MessageEmbed()
              .setColor(client.config.embedMainColor)
@@ -55,7 +76,8 @@ const embeda = new MessageEmbed()
                     message.guild.channels.cache.forEach(async (channel, id) => {
                       await channel.createOverwrite(muterole, {
                         SEND_MESSAGES: false,
-                        ADD_REACTIONS: false
+                        ADD_REACTIONS: false,
+                        SPEAK: false
                 
                       })
                     });
@@ -67,6 +89,8 @@ const embeda = new MessageEmbed()
                 await button.message.edit({embed: desmutado, component: null})
               }
             })
+
+            if(!mutetime) return message.channel.send({embed: embeda, component: fim});
 
             let unmute = new MessageButton()
             .setStyle('green')
@@ -126,7 +150,8 @@ const embed = new MessageEmbed()
                       message.guild.channels.cache.forEach(async (channel, id) => {
                         await channel.createOverwrite(muterole, {
                           SEND_MESSAGES: false,
-                          ADD_REACTIONS: false
+                          ADD_REACTIONS: false,
+                          SPEAK: false
                   
                         })
                       });
@@ -159,9 +184,6 @@ const embed = new MessageEmbed()
               .setStyle('red')
               .setID('cancel1')
               .setLabel('Cancelar')
-
-      
-           
 
               client.on('clickButton', async (button) => {
                 if(button.id === "cancel1"){
