@@ -8,24 +8,23 @@ const command = new Command('invite', 'Informações');
 command.setAliases('convidar')
 .setExecute(async execParams => {
         const {message, client, args} = execParams;
-
+        let member = message.author
   const Embed = new MessageEmbed() 
     
   .setTitle(`🤖 | Me convide para o seu servidor!`)
   .setThumbnail(client.user.avatarURL({ dynamic: true }))
-  .setDescription(`**😸 |Me adicione**: [Clique aqui](https://discord.com/oauth2/authorize?client_id=781310999864148009&scope=bot&permissions=8)
-  **☎ |Meu servidor de suporte**: [Clique aqui](https://discord.gg/Gs65zux2Cr)`)
+  .setDescription(`**Me adicione no seu servidor!**\n\n*Caso tenha dúvidas sobre mim, entre no meu servidor de suporte!*`)
   .setColor(client.config.embedMainColor)
 
   let invite = new MessageButton()
   .setStyle('url')
-  .setLabel('Invite') 
+  .setLabel('Convidar') 
   .setURL('https://discord.com/oauth2/authorize?client_id=781310999864148009&scope=bot&permissions=8')
   .setDisabled(false); 
 
   let suport = new MessageButton()
   .setStyle('url')
-  .setLabel('Support') 
+  .setLabel('Suporte') 
   .setURL('https://discord.gg/Gs65zux2Cr')
   .setDisabled(false); 
 
