@@ -11,6 +11,9 @@ command.setAliases('mutar')
     const {message, client, args} = execParams;
     if(message.author.bot) return;
 
+      if (!message.member.hasPermission('MANAGE_MESSAGES')) 
+           return message.channel.send(`${message.author}, você não possui permissão para este comando.\nPermissão necessária: ` + "`GERENCIAR MENSAGENS`").then(m => m.delete({ timeout: 4000 }));
+
 let muterole = message.guild.roles.cache.find(role => role.name === "mutado");
 let member = message.mentions.members.first();
 let usert = message.author
