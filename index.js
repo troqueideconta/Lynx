@@ -18,6 +18,8 @@ const manager = client.giveawaysManager = new GiveawaysManager(client, {
     }
 });
 
+// Iniciantes, se quiser mudar a mensagem do sorteio só achar a pasta da npm do sorteio no node modules e mudar por lá!
+
 const low = require('lowdb')
 const FileSync = require('lowdb/adapters/FileSync')
  
